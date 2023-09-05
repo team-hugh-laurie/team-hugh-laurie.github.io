@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import thumbsUp from './thumbs-up.jpeg';
+---
+
+<Layout title="Welcome to Astro.">
+	<main>
+		<img src={thumbsUp.src} height={thumbsUp.height} width={thumbsUp.width}>
+	</main>
+</Layout>
+
+<style>
+	main {
+		display: flex;
+		justify-content: center;
+		align-items: start;
+	}
+
+	img {
+		height: auto;
+		max-width: 100%;
+		border-radius: 1rem;
+	}
+</style>
