@@ -12,32 +12,14 @@
   $: wordList = shuffle([target, ...fillers].slice(0, 4));
 </script>
 
-<section>
-  <img src={image} height={size} width={size} alt="">
-  <div class="answers">
-    {#each wordList as word}
-      <Option onClick={word === target ? onCorrect : onError}>{word}</Option>
-    {/each}
-  </div>
-</section>
-
+<img src={image} height={size} width={size} alt="">
+<div class="answers">
+  {#each wordList as word}
+    <Option onClick={word === target ? onCorrect : onError}>{word}</Option>
+  {/each}
+</div>
 
 <style>
-  section {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    align-items: center;
-    align-self: center;
-    padding: 2rem 1rem;
-    box-sizing: border-box;
-    max-width: 420px;
-    width: 100%;
-    min-width: 300px;
-    max-height: 600px;
-  }
-
   img {
     height: auto;
     max-width: 100%;
