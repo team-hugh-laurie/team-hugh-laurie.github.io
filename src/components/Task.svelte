@@ -1,5 +1,6 @@
 <script lang="ts">
   import shuffle from 'array-shuffle';
+  import Option from './Option.svelte';
 
   export let image: string;
   export let target: string;
@@ -15,7 +16,7 @@
   <img src={image} height={size} width={size} alt="">
   <div class="answers">
     {#each wordList as word}
-      <button on:click={word === target ? onCorrect : onError}>{word}</button>
+      <Option onClick={word === target ? onCorrect : onError}>{word}</Option>
     {/each}
   </div>
 </section>
@@ -26,7 +27,7 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 40px;
     align-items: center;
     align-self: center;
     padding: 2rem 1rem;
@@ -40,26 +41,14 @@
   img {
     height: auto;
     max-width: 100%;
-    border-radius: 1rem;
+    border-radius: 14px;
   }
 
   .answers {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    flex-grow: 1;
+    grid-template-rows: 80px 80px;
     width: 100%;
-  }
-  
-  button {
-    background: transparent;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 2rem;
-  }
-  button:hover {
-    color: rgba(255,255,255,0.8);
-    background: rgba(255,255,255,0.1);
+    gap: 16px;
   }
 </style>
