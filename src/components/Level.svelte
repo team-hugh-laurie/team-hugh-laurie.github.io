@@ -7,7 +7,6 @@
   export let options: GameOptions;
   
   let state = game(options);
-  $: progress = 1 - $state.remainingSteps / $state.totalSteps;
 </script>
 
 <section>

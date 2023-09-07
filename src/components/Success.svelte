@@ -30,4 +30,9 @@
     background: var(--accent);
     letter-spacing: 0.2px;
   }
+
+  svg {
+    transform-origin: center center;
+    animation: 800ms ease jump;
+  }
 </style>
