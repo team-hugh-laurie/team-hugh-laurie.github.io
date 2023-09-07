@@ -3,26 +3,47 @@ import DuckSprite from '../components/DuckSprite.astro';
 
 interface Props {
 	title: string;
+	socialImage: string;
 }
 
-const { title } = Astro.props;
+const { title, socialImage } = Astro.props;
+const url = 'https://team-hugh-laurie.github.io';
+const description = 'Learn English words with cute animals and the power of AI';
 ---
 
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		<script defer data-domain="team-hugh-laurie.github.io" src="https://t.thoughtspile.tech/js/script.js"></script>
+
+		<meta property="og:type" content="website">
+		
 		<title>{title}</title>
+    <meta property="og:title" content={title}>
+    <meta property="og:url" content={url}>
+    <meta property="og:site_name" content={title}>
+    <meta property="og:locale" content="en_US">
+		
+		<meta name="description" content={description}>
+		<meta property="og:description" content={description}>
+		<meta property="twitter:description" content={description}>
+    
+		<meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@thoughtspile">
+    
+		<meta name="twitter:image" content={url + socialImage}>
+		<meta property="og:image" content={url + socialImage}>
 	</head>
 	<body>
 		<slot />
 		<DuckSprite />
 	</body>
 </html>
+
 <style is:global>
 	:root {
 		--bg: white;

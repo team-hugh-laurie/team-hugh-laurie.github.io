@@ -3,22 +3,32 @@
   import Task from './Task.svelte';
   import Progress from './Progress.svelte';
   import Success from './Success.svelte';
+  import { plausible } from '../plausible';
   
   export let options: GameOptions;
   
   let state = game(options);
+  function restart() {
+    state = game(options);
+    plausible('again');
+  }
+  function onCorrect() {
+    state.next('success')
+    plausible('correct');
+  }
+  function onError() {
+    state.next('error')
+    plausible('error');
+  }
+  $: !$state.step && plausible('win');
 </script>
 
 <section>
   {#if $state.step}
     <Progress done={$state.totalSteps - $state.remainingSteps} total={$state.totalSteps} />
-    <Task
-      {...$state.step}
-      onCorrect={() => state.next('success')}
-      onError={() => state.next('error')}
-    />
+    <Task {...$state.step} {onCorrect} {onError} />
   {:else}
-    <Success restart={() => state = game(options)} />
+    <Success {restart} />
   {/if}
 </section>
 

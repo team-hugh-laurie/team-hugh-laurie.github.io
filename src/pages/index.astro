@@ -1,9 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Game from '../components/Game.svelte';
+
+import socialImage from '../images/social.png';
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Baby Duck's English Club" socialImage={socialImage.src}>
 	<Game client:load />
 </Layout>
 
