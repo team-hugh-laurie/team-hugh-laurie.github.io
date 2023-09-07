@@ -1,24 +1,24 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import thumbsUp from '../images/thumbs-up.jpeg';
+import chicken from '../images/chicken.jpeg';
+import Task from '../components/Task.svelte';
 ---
 
 <Layout title="Welcome to Astro.">
-	<main>
-		<img src={thumbsUp.src} height={thumbsUp.height} width={thumbsUp.width}>
-	</main>
+	<Task 
+		client:load
+		src={chicken.src} 
+		target="chicken" 
+		altWords={['tree', 'sun', 'drive']}
+		onCorrect={() => alert('ok')}
+		onError={() => alert('nope')}
+	/>
 </Layout>
 
 <style>
 	main {
 		display: flex;
 		justify-content: center;
-		align-items: start;
-	}
-
-	img {
-		height: auto;
-		max-width: 100%;
-		border-radius: 1rem;
+		align-items: center;
 	}
 </style>

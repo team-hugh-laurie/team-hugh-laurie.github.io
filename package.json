@@ -11,7 +11,10 @@
     "format": "npx prettier --write src/**/*{.tsx,.astro,.ts} *.js"
   },
   "dependencies": {
-    "astro": "^3.0.8"
+    "@astrojs/svelte": "^4.0.1",
+    "array-shuffle": "^3.0.0",
+    "astro": "^3.0.8",
+    "svelte": "^4.2.0"
   },
   "devDependencies": {
     "prettier": "^3.0.3",
