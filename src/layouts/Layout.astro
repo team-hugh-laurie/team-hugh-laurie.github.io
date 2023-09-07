@@ -1,5 +1,5 @@
 --- 
-import Miniduck from '../components/Miniduck.astro';
+import DuckSprite from '../components/DuckSprite.astro';
 
 interface Props {
 	title: string;
@@ -20,7 +20,7 @@ const { title } = Astro.props;
 	</head>
 	<body>
 		<slot />
-		<Miniduck />
+		<DuckSprite />
 	</body>
 </html>
 <style is:global>

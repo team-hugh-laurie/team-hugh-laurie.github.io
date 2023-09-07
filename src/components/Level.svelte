@@ -2,12 +2,12 @@
   import { game, type GameOptions } from '../game';
   import Task from './Task.svelte';
   import Progress from './Progress.svelte';
+  import Success from './Success.svelte';
   
   export let options: GameOptions;
   
-  const state = game(options);
+  let state = game(options);
   $: progress = 1 - $state.remainingSteps / $state.totalSteps;
-  $: console.log(progress, $state)
 </script>
 
 <section>
@@ -18,6 +18,8 @@
       onCorrect={() => state.next('success')}
       onError={() => state.next('error')}
     />
+  {:else}
+    <Success restart={() => state = game(options)} />
   {/if}
 </section>
 
