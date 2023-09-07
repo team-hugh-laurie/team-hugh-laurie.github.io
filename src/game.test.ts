@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { planGame, game } from './planGame';
+import { planGame, game } from './game';
 import { get } from 'svelte/store';
 
 const options: Parameters<typeof planGame>[0] = {

@@ -1,7 +1,7 @@
 import shuffle from 'array-shuffle';
 import { writable, type Readable } from 'svelte/store';
 
-interface GameOptions {
+export interface GameOptions {
   words: string[];
   images: Record<string, string>;
   stepSize: number;

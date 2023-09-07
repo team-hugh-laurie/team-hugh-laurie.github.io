@@ -1,18 +1,18 @@
 <script lang="ts">
   import shuffle from 'array-shuffle';
 
-  export let src: string;
+  export let image: string;
   export let target: string;
-  export let altWords: string[] = [];
+  export let fillers: string[] = [];
   export let onCorrect: () => void;
   export let onError: () => void;
   
   const size = 160;
-  $: wordList = shuffle([target, ...altWords].slice(0, 4));
+  $: wordList = shuffle([target, ...fillers].slice(0, 4));
 </script>
 
 <section>
-  <img {src} height={size} width={size} alt="">
+  <img src={image} height={size} width={size} alt="">
   <div class="answers">
     {#each wordList as word}
       <button on:click={word === target ? onCorrect : onError}>{word}</button>

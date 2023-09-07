@@ -1,18 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import chicken from '../images/chicken.jpeg';
-import Task from '../components/Task.svelte';
+import Game from '../components/Game.svelte';
 ---
 
 <Layout title="Welcome to Astro.">
-	<Task 
-		client:load
-		src={chicken.src} 
-		target="chicken" 
-		altWords={['tree', 'sun', 'drive']}
-		onCorrect={() => alert('ok')}
-		onError={() => alert('nope')}
-	/>
+	<Game client:load />
 </Layout>
 
 <style>
