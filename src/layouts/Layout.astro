@@ -39,6 +39,7 @@ const description = 'Learn English words with cute animals and the power of AI';
 		<meta property="og:image" content={url + socialImage}>
 	</head>
 	<body>
+		<svg class="bg" width="375" height="743" viewBox="0 0 375 743" fill="none" xmlns="http://www.w3.org/2000/svg" ><circle opacity="0.2" cx="61.5" cy="35.5" r="89.5" fill="white"/><circle opacity="0.4" cx="140.5" cy="505.5" r="47.5" fill="white"/><circle opacity="0.3" cx="244" cy="194" r="30" fill="white"/><circle opacity="0.4" cx="326" cy="609" r="10" fill="white"/></svg>
 		<slot />
 		<DuckSprite />
 	</body>
@@ -64,6 +65,14 @@ const description = 'Learn English words with cute animals and the power of AI';
 		display: flex;
 		flex-direction: column;
 		height: 100vh;
+	}
+
+	.bg {
+		position: fixed;
+		left: 0;
+		right: 0;
+		top: 0;
+		z-index: -1;
 	}
 
 	@keyframes jump {
