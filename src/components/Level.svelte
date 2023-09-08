@@ -3,6 +3,7 @@
   import Task from './Task.svelte';
   import Progress from './Progress.svelte';
   import Success from './Success.svelte';
+  import ImagePreloader from './ImagePreloader.svelte';
   import { plausible } from '../plausible';
   import { fadeOut, screenSlide } from './transitions';
   
@@ -35,6 +36,7 @@
   {:else}
     <Success {restart} />
   {/if}
+  <ImagePreloader images={$state.images} />
 </section>
 
 <style>

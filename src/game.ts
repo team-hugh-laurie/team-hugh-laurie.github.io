@@ -29,6 +29,7 @@ interface Game {
   totalSteps: number;
   remainingSteps: number;
   attempt: number;
+  images: string[];
 }
 export function game(options: GameOptions) {
   let plan = planGame(options);
@@ -39,6 +40,7 @@ export function game(options: GameOptions) {
     totalSteps,
     remainingSteps: plan.length,
     attempt: 0,
+    images: plan.map(t => t.image),
   });
   return { 
     ...(store as Readable<Game>),
@@ -49,6 +51,7 @@ export function game(options: GameOptions) {
         totalSteps,
         remainingSteps: plan.length,
         attempt: s.attempt + 1,
+        images: s.images,
       }));
     },
   };
