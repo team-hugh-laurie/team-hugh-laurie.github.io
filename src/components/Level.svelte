@@ -10,19 +10,33 @@
   export let options: GameOptions;
   
   let state = game(options);
-  function restart() {
-    state = game(options);
-    plausible('again');
-  }
-  function onCorrect() {
-    state.next('success')
-    plausible('correct');
-  }
-  function onError() {
-    state.next('error')
-    plausible('error');
-  }
   $: !$state.step && plausible('win');
+  
+  const successActions = {
+    restart: () => {
+      state = game(options);
+      plausible('again');
+    },
+    onMicrotransaction: () => {
+      successActions.restart();
+      plausible('microtransaction');
+    },
+    onSubscription: () => {
+      successActions.restart();
+      plausible('subscription');
+    }
+  };
+  
+  const taskActions = {
+    onCorrect: () => {
+      state.next('success')
+      plausible('correct');
+    },
+    onError: () => {
+      state.next('error')
+      plausible('error');
+    }
+  };
 </script>
 
 <section>
@@ -30,11 +44,11 @@
     <Progress done={$state.totalSteps - $state.remainingSteps} total={$state.totalSteps} />
     {#key $state.attempt}
       <div class="slider" in:screenSlide out:fadeOut>
-        <Task {...$state.step} {onCorrect} {onError} />
+        <Task {...$state.step} {...taskActions} />
       </div>
     {/key}
   {:else}
-    <Success {restart} />
+    <Success isPaywall={false} {...successActions} />
   {/if}
   <ImagePreloader images={$state.images} />
 </section>
