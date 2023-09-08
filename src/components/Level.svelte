@@ -6,23 +6,28 @@
   import ImagePreloader from './ImagePreloader.svelte';
   import { plausible } from '../plausible';
   import { fadeOut, screenSlide } from './transitions';
+  import PayModal from './PayModal.svelte';
   
   export let options: GameOptions;
   
+  let showPayModal = false;
   let state = game(options);
   $: !$state.step && plausible('win');
   
+  function restart() {
+    showPayModal = false;
+    state = game(options);
+    plausible('again');
+  }
+
   const successActions = {
-    restart: () => {
-      state = game(options);
-      plausible('again');
-    },
+    restart,
     onMicrotransaction: () => {
-      successActions.restart();
+      showPayModal = true;
       plausible('microtransaction');
     },
     onSubscription: () => {
-      successActions.restart();
+      showPayModal = true;
       plausible('subscription');
     }
   };
@@ -48,10 +53,14 @@
       </div>
     {/key}
   {:else}
-    <Success isPaywall={false} {...successActions} />
+    <Success isPaywall={true} {...successActions} />
   {/if}
   <ImagePreloader images={$state.images} />
 </section>
+
+{#if showPayModal}
+  <PayModal {restart} />
+{/if}
 
 <style>
   section, .slider {

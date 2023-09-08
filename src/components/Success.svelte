@@ -1,10 +1,15 @@
 <script lang="ts">
+  import Button from './Button.svelte';
+
   export let restart: () => void;
   export let onMicrotransaction: () => void;
   export let onSubscription: () => void;
   export let isPaywall: boolean;
 
-  const title = isPaywall ? 'О нет! На сегодня уровни закончились' : 'Молодец!';
+  const onRetry = isPaywall ? (() => showPaywall = true) : restart;
+  
+  let showPaywall = false;
+  const title = showPaywall ? 'О нет! На сегодня уровни закончились' : 'Молодец!';
 </script>
 
 <svg class="bg-rays" width="375" height="416" viewBox="0 0 375 416" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -14,24 +19,24 @@
 
 <h1>{title}</h1>
 
-{#if isPaywall}
+{#if showPaywall}
   <svg xmlns="http://www.w3.org/2000/svg" width="206" height="294" viewBox="0 0 206 294">
     <use href="#doneduck" />
   </svg>
   <div class="actions">
     <p>Возвращайся завтра или оплати подписку, чтобы не ждать:</p>
-    <button on:click={onMicrotransaction}>24 часа за 10&#8202;₽</button>
-    <button on:click={onSubscription}>Навсегда за 100&#8202;₽</button>
+    <Button on:click={onMicrotransaction}>24 часа за 10&#8202;₽</Button>
+    <Button on:click={onSubscription}>Навсегда за 100&#8202;₽</Button>
   </div>
 {:else}
   <svg class="duck" xmlns="http://www.w3.org/2000/svg" width="375" height="416">
     <use href="#winnerduck" />
   </svg>
-  <button on:click={restart}>Play again</button>
+  <Button on:click={onRetry}>Играть</Button>
 {/if}
 
 <style>
-  h1, button, p {
+  h1, p {
     color: var(--bg);
     font-weight: 500;
     text-align: center;
@@ -46,16 +51,6 @@
     margin: 0;
     max-width: 290px;
   }
-  
-  button {
-    width: 100%;
-    padding: 10px;
-    border-radius: 100px;
-    font-size: 20px;
-    border: none;
-    background: var(--accent);
-    letter-spacing: 0.2px;
-  }
 
   .duck {
     transform-origin: center center;
@@ -67,6 +62,7 @@
     top: 0;
     left: 0;
     right: 0;
+    width: 100%;
     z-index: -2;
   }
 
