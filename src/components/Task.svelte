@@ -15,14 +15,14 @@
 <img src={image} height={size} width={size} alt="">
 <div class="answers">
   {#each wordList as word}
-    <Option onClick={word === target ? onCorrect : onError}>{word}</Option>
+    <Option correct={word === target} onClick={word === target ? onCorrect : onError}>{word}</Option>
   {/each}
 </div>
 
 <style>
   img {
     height: auto;
-    max-width: 100%;
+    height: 160px;
     border-radius: 14px;
   }
 

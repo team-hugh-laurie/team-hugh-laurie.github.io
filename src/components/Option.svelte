@@ -1,8 +1,15 @@
 <script lang="ts">
   export let onClick: () => void;
+  export let correct: boolean;
+
+  let selected = false;
+  function clickHandler() {
+    selected = true;
+    onClick();
+  }
 </script>
 
-<button on:click={onClick}><slot /></button>
+<button on:click={clickHandler} class:correct class:selected><slot /></button>
 
 <style>
   button {
@@ -13,8 +20,14 @@
     font-size: 24px;
     border-radius: 14px;
   }
-  button:active {
-    background: var(--gray);
+  button.selected {
+    color: var(--bg);
+  }
+  button.selected.correct {
+    background: var(--positive);
+  }
+  button.selected:not(.correct) {
+    background: var(--negative);
   }
   @media (hover: hover) {
     button:hover {

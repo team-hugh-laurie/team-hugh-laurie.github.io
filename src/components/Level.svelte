@@ -4,6 +4,7 @@
   import Progress from './Progress.svelte';
   import Success from './Success.svelte';
   import { plausible } from '../plausible';
+  import { fadeOut, screenSlide } from './transitions';
   
   export let options: GameOptions;
   
@@ -26,23 +27,28 @@
 <section>
   {#if $state.step}
     <Progress done={$state.totalSteps - $state.remainingSteps} total={$state.totalSteps} />
-    <Task {...$state.step} {onCorrect} {onError} />
+    {#key $state.attempt}
+      <div class="slider" in:screenSlide out:fadeOut>
+        <Task {...$state.step} {onCorrect} {onError} />
+      </div>
+    {/key}
   {:else}
     <Success {restart} />
   {/if}
 </section>
 
 <style>
-  section {
-    flex-grow: 1;
+  section, .slider {
     display: flex;
     flex-direction: column;
     gap: 40px;
     align-items: center;
+    width: 100%;
+  }
+  section {
     align-self: center;
     box-sizing: border-box;
     max-width: 420px;
-    width: 100%;
     min-width: 300px;
     max-height: 600px;
   }

@@ -28,6 +28,7 @@ interface Game {
   } | null;
   totalSteps: number;
   remainingSteps: number;
+  attempt: number;
 }
 export function game(options: GameOptions) {
   let plan = planGame(options);
@@ -37,16 +38,18 @@ export function game(options: GameOptions) {
     step: getStep(),
     totalSteps,
     remainingSteps: plan.length,
+    attempt: 0,
   });
   return { 
     ...(store as Readable<Game>),
     next: (status: 'error' | 'success') => {
       plan = status === 'success' ? plan.slice(1) : shuffle(plan);
-      store.set({
+      store.update(s => ({
         step: getStep(),
         totalSteps,
         remainingSteps: plan.length,
-      });
+        attempt: s.attempt + 1,
+      }));
     },
   };
 }
