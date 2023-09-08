@@ -5,8 +5,21 @@
   export let onMicrotransaction: () => void;
   export let onSubscription: () => void;
   export let isPaywall: boolean;
-  
-  const title = isPaywall ? 'О нет! На сегодня уровни закончились' : 'Молодец!';
+  export let locale: 'ru' | 'intl';
+
+  $: texts = locale === 'ru' ? {
+    title: isPaywall ? 'О нет! На сегодня уровни закончились' : 'Молодец!',
+    body: 'Возвращайся завтра или оплати подписку, чтобы не ждать:',
+    micro: '24 часа за 10 ₽',
+    full: 'Навсегда за 100 ₽',
+    playAgain: 'Сыграть ещё раз'
+  } : {
+    title: isPaywall ? 'Oh no! Out of free levels' : 'Well done!',
+    body: 'Come back tomorrow, or subscribe to skip waiting:',
+    micro: '24 hours for $0.10',
+    full: 'Forever for $1.00',
+    playAgain: 'Play again'
+  };
 </script>
 
 <svg class="bg-rays" width="375" height="416" viewBox="0 0 375 416" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -14,22 +27,22 @@
   <path d="M375 0H0L188 326.5L375 0Z" fill="#5331B3"/>
 </svg>
 
-<h1>{title}</h1>
+<h1>{texts.title}</h1>
 
 {#if isPaywall}
   <svg xmlns="http://www.w3.org/2000/svg" width="206" height="294" viewBox="0 0 206 294">
     <use href="#doneduck" />
   </svg>
   <div class="actions">
-    <p>Возвращайся завтра или оплати подписку, чтобы не ждать:</p>
-    <Button on:click={onMicrotransaction}>24 часа за 10&#8202;₽</Button>
-    <Button on:click={onSubscription}>Навсегда за 100&#8202;₽</Button>
+    <p>{texts.body}</p>
+    <Button on:click={onMicrotransaction}>{texts.micro}</Button>
+    <Button on:click={onSubscription}>{texts.full}</Button>
   </div>
 {:else}
   <svg class="duck" xmlns="http://www.w3.org/2000/svg" width="375" height="416">
     <use href="#winnerduck" />
   </svg>
-  <Button on:click={restart}>Сыграть ещё раз</Button>
+  <Button on:click={restart}>{texts.playAgain}</Button>
 {/if}
 
 <style>

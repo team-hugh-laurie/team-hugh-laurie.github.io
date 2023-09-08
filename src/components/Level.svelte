@@ -10,6 +10,7 @@
   import PayModal from './PayModal.svelte';
   
   export let options: GameOptions;
+  export let locale: 'intl' | 'ru';
   
   let showPayModal = false;
   const payEngine = getPaymentEngine();
@@ -54,7 +55,7 @@
 
 <section>
   {#if !$payEngine.canPlay || showPayModal}
-    <Success isPaywall {...successActions} />
+    <Success {locale} isPaywall {...successActions} />
   {:else if $state.step}
     <Progress done={$state.totalSteps - $state.remainingSteps} total={$state.totalSteps} />
     {#key $state.attempt}
@@ -63,13 +64,13 @@
       </div>
     {/key}
   {:else}
-    <Success isPaywall={false} {...successActions} />
+    <Success {locale} isPaywall={false} {...successActions} />
   {/if}
   <ImagePreloader images={$state.images} />
 </section>
 
 {#if showPayModal}
-  <PayModal {restart} />
+  <PayModal {locale} {restart} />
 {/if}
 
 <style>
