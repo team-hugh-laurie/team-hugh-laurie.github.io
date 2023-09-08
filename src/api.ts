@@ -13,6 +13,8 @@ export async function loadGameData(): Promise<GameData> {
   const data: GameData = await res.json();
   return {
     images: Object.fromEntries(Object.entries(data.images).map(([w, path]) => [w, absolutize(path)])),
-    words: data.words.map(w => w.toLowerCase()),
+    words: uniq(data.words.map(w => w.toLowerCase())),
   };
 } 
+
+const uniq = (data: string[]) => [...new Set(data)].sort();
