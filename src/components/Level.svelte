@@ -6,15 +6,21 @@
   import ImagePreloader from './ImagePreloader.svelte';
   import { plausible } from '../plausible';
   import { fadeOut, screenSlide } from './transitions';
+  import { getPaymentEngine } from '../paymentEngine';
   import PayModal from './PayModal.svelte';
   
   export let options: GameOptions;
   
   let showPayModal = false;
+  const payEngine = getPaymentEngine();
   let state = game(options);
-  $: !$state.step && plausible('win');
+  // on game end
+  $: if (!$state.step) {
+    plausible('win');
+  }
   
   function restart() {
+    payEngine.endGame();
     showPayModal = false;
     state = game(options);
     plausible('again');
@@ -23,10 +29,12 @@
   const successActions = {
     restart,
     onMicrotransaction: () => {
+      payEngine.pay();
       showPayModal = true;
       plausible('microtransaction');
     },
     onSubscription: () => {
+      payEngine.pay();
       showPayModal = true;
       plausible('subscription');
     }
@@ -45,7 +53,9 @@
 </script>
 
 <section>
-  {#if $state.step}
+  {#if !$payEngine.canPlay || showPayModal}
+    <Success isPaywall {...successActions} />
+  {:else if $state.step}
     <Progress done={$state.totalSteps - $state.remainingSteps} total={$state.totalSteps} />
     {#key $state.attempt}
       <div class="slider" in:screenSlide out:fadeOut>
@@ -53,7 +63,7 @@
       </div>
     {/key}
   {:else}
-    <Success isPaywall={true} {...successActions} />
+    <Success isPaywall={false} {...successActions} />
   {/if}
   <ImagePreloader images={$state.images} />
 </section>

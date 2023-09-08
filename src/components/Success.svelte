@@ -5,11 +5,8 @@
   export let onMicrotransaction: () => void;
   export let onSubscription: () => void;
   export let isPaywall: boolean;
-
-  const onRetry = isPaywall ? (() => showPaywall = true) : restart;
   
-  let showPaywall = false;
-  const title = showPaywall ? 'О нет! На сегодня уровни закончились' : 'Молодец!';
+  const title = isPaywall ? 'О нет! На сегодня уровни закончились' : 'Молодец!';
 </script>
 
 <svg class="bg-rays" width="375" height="416" viewBox="0 0 375 416" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -19,7 +16,7 @@
 
 <h1>{title}</h1>
 
-{#if showPaywall}
+{#if isPaywall}
   <svg xmlns="http://www.w3.org/2000/svg" width="206" height="294" viewBox="0 0 206 294">
     <use href="#doneduck" />
   </svg>
@@ -32,7 +29,7 @@
   <svg class="duck" xmlns="http://www.w3.org/2000/svg" width="375" height="416">
     <use href="#winnerduck" />
   </svg>
-  <Button on:click={onRetry}>Играть</Button>
+  <Button on:click={restart}>Сыграть ещё раз</Button>
 {/if}
 
 <style>
